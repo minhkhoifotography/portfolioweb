@@ -3,159 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Lưu Minh Khôi</title>
+    <title>Luu Minh Khoi | The Holy See Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="top-bar"></div>
+
     <header>
-        <nav>
-            <div class="logo">Minh Khoi</div>
-            <div class="menu-toggle" id="mobile-menu">
-                <i class="fas fa-bars"></i>
+        <div class="header-container">
+            <div class="coat-of-arms">
+                <i class="fas fa-crown"></i>
             </div>
-            <ul class="nav-links">
-                <li><a href="#" class="tab-link active" data-target="home">Trang Chủ</a></li>
-                <li><a href="#" class="tab-link" data-target="about">Về Tôi</a></li>
-                <li><a href="#" class="tab-link" data-target="experience">Kinh Nghiệm</a></li>
-                <li><a href="#" class="tab-link" data-target="awards">Thành Tích</a></li>
-                <li><a href="#" class="tab-link" data-target="contact">Liên Hệ</a></li>
-            </ul>
-        </nav>
+            
+            <div class="site-title">
+                <h1>Luu Minh Khoi</h1>
+                <p class="latin-subtitle">Servus Servorum Dei</p> </div>
+
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="tab-link active" data-target="home">Trang Chủ</a></li>
+                    <li><span class="separator">•</span></li>
+                    <li><a href="#" class="tab-link" data-target="about">Tiểu Sử</a></li>
+                    <li><span class="separator">•</span></li>
+                    <li><a href="#" class="tab-link" data-target="experience">Sứ Vụ</a></li> <li><span class="separator">•</span></li>
+                    <li><a href="#" class="tab-link" data-target="awards">Tuyên Dương</a></li>
+                    <li><span class="separator">•</span></li>
+                    <li><a href="#" class="tab-link" data-target="contact">Liên Lạc</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main class="main-container">
 
         <section id="home" class="tab-content active">
-            <div class="hero-wrapper">
-                <div class="hero-content">
-                    <img src="Pio.jpg" alt="Lưu Minh Khôi" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <h1>Lưu Minh Khôi</h1>
-                    <p class="tagline">Trường THPT Chuyên Lê Quý Đôn - Khánh Hòa</p>
-                    <p>"Hành trình 1000 ngày - The 1000-day journey"</p>
-                    <div class="motto">
-                        <i class="fas fa-quote-left"></i>
-                        Longe Dominus apparuit mihi. Et in caritate perpetua ideo attrerans.
-                        <br>
-                        <small>- Jeremias 31:3 -</small>
-                    </div>
+            <div class="papal-document">
+                <div class="hero-image-frame">
+                    <img src="Pio.jpg" alt="Luu Minh Khoi" class="profile-img" onerror="this.src='https://via.placeholder.com/200'">
+                </div>
+                <h2 class="doc-title">Hành Trình 1000 Ngày</h2>
+                <p class="doc-subtitle">"The 1000-day Journey"</p>
+                
+                <div class="divider-icon"><i class="fas fa-cross"></i></div>
+
+                <div class="motto-box">
+                    <p class="latin-text">"Longe Dominus apparuit mihi. Et in caritate perpetua ideo attrerans."</p>
+                    <p class="ref-text">- Jeremias 31:3 -</p>
                 </div>
             </div>
         </section>
 
         <section id="about" class="tab-content">
-            <h2>Thông Tin Cá Nhân</h2>
-            <div class="about-grid">
-                <div class="info-list">
-                    <h3><i class="fas fa-user-circle"></i> Giới thiệu</h3>
-                    <ul>
-                        <li><strong>Ngày sinh:</strong> 16/11/2008</li>
-                        <li><strong>Giới tính:</strong> Nam</li>
+            <h2 class="section-header">Thông Tin Cá Nhân</h2>
+            <div class="content-frame">
+                <div class="about-classic">
+                    <ul class="info-list">
+                        <li><strong>Họ và tên:</strong> Lưu Minh Khôi</li>
+                        <li><strong>Sinh nhật:</strong> 16 tháng 11, 2008</li>
                         <li><strong>Tôn giáo:</strong> Công Giáo (Michaël – Pius)</li>
-                        <li><strong>Email:</strong> luuminhkhoiworking@gmail.com</li>
-                        <li><strong>SĐT:</strong> (+84) 833 204 240</li>
+                        <li><strong>Học vấn:</strong> THPT Chuyên Lê Quý Đôn - Khánh Hòa</li>
                     </ul>
-                </div>
-                <div class="interests">
-                    <h3><i class="fas fa-heart"></i> Sở thích & Kỹ năng</h3>
-                    <div class="hobbies-tags">
-                        <span class="tag"><i class="fas fa-camera"></i> Photography</span>
-                        <span class="tag"><i class="fas fa-video"></i> Videography</span>
-                        <span class="tag"><i class="fas fa-pen-nib"></i> Content Creator</span>
-                        <span class="tag"><i class="fas fa-handshake"></i> Diplomatic</span>
-                        <span class="tag"><i class="fas fa-music"></i> Vocal Music</span>
-                        <span class="tag"><i class="fas fa-book-bible"></i> Theology</span>
+                    
+                    <hr class="small-divider">
+
+                    <h3>Sở thích & Kỹ năng</h3>
+                    <div class="skills-text">
+                        Nhiếp ảnh &bull; Quay phim &bull; Sáng tạo nội dung &bull; Ngoại giao &bull; Thanh nhạc &bull; Thần học
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="experience" class="tab-content">
-            <h2>Hành Trình & Kinh Nghiệm</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2025 - Hiện tại</span>
-                        <h3>Foreign Affairs Officer</h3>
-                        <p>Conferentia Episcoporum Vietnamie</p>
+            <h2 class="section-header">Hành Trình & Sứ Vụ</h2>
+            <div class="content-frame">
+                <div class="timeline-classic">
+                    <div class="timeline-entry">
+                        <span class="time">2025 - Nay</span>
+                        <h4 class="role">Foreign Affairs Officer</h4>
+                        <span class="place">Conferentia Episcoporum Vietnamie</span>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2025 - Hiện tại</span>
-                        <h3>Professor of Theology</h3>
-                        <p>Nha Trang Cathedral</p>
+                    <div class="timeline-entry">
+                        <span class="time">2025 - Nay</span>
+                        <h4 class="role">Professor of Theology</h4>
+                        <span class="place">Nha Trang Cathedral</span>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2025</span>
-                        <h3>Mentor</h3>
-                        <p>Le Quy Don Science and Engineering Fair</p>
+                    <div class="timeline-entry">
+                        <span class="time">2023 - 2025</span>
+                        <h4 class="role">Photographer of LMC</h4>
+                        <span class="place">Le Quy Don Media Club</span>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2024 - 2025</span>
-                        <h3>Vice Professor of Theology</h3>
-                        <p>Phuoc Hoa Parish</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2023 - 2025</span>
-                        <h3>Photographer of LMC</h3>
-                        <p>Le Quy Don Media Club</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="content">
-                        <span class="date">2017 - 2022</span>
-                        <h3>Professor of Vocal Music</h3>
-                        <p>Stella Maris Major Seminary</p>
+                     <div class="timeline-entry">
+                        <span class="time">2017 - 2022</span>
+                        <h4 class="role">Professor of Vocal Music</h4>
+                        <span class="place">Stella Maris Major Seminary</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="awards" class="tab-content">
-            <h2>Thành Tích Nổi Bật</h2>
-            <div class="awards-grid">
-                <div class="award-card">
-                    <h3><i class="fas fa-trophy"></i> Giải Nhất (1st Prize)</h3>
-                    <p>Le Quy Don Science and Engineering Fair 2025-2026</p>
-                </div>
-                <div class="award-card">
-                    <h3><i class="fas fa-medal"></i> Giải Nhì (2nd Prize)</h3>
-                    <p>Le Quy Don Science and Engineering Fair 2024-2025</p>
-                </div>
-                <div class="award-card">
-                    <h3><i class="fas fa-award"></i> Giải Ba (3rd Prize)</h3>
-                    <p>Khanh Hoa Science and Engineering Fair 2024-2025</p>
-                </div>
-                <div class="award-card">
-                    <h3><i class="fas fa-scroll"></i> Papal Leo XIV's Blessing</h3>
-                    <p>Dedication to proclaiming the Gospel (2025)</p>
+            <h2 class="section-header">Bảng Vàng Thành Tích</h2>
+            <div class="content-frame">
+                <div class="awards-list">
+                    <div class="award-item">
+                        <i class="fas fa-star award-icon"></i>
+                        <div class="award-details">
+                            <h3>Giải Nhất (1st Prize)</h3>
+                            <p>Le Quy Don Science and Engineering Fair 2025-2026</p>
+                        </div>
+                    </div>
+                    <div class="award-item">
+                        <i class="fas fa-star award-icon"></i>
+                        <div class="award-details">
+                            <h3>Giải Nhì (2nd Prize)</h3>
+                            <p>Le Quy Don Science and Engineering Fair 2024-2025</p>
+                        </div>
+                    </div>
+                    <div class="award-item">
+                        <i class="fas fa-scroll award-icon"></i>
+                        <div class="award-details">
+                            <h3>Papal Leo XIV's Blessing</h3>
+                            <p>Dedication to proclaiming the Gospel (2025)</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="tab-content">
-            <h2>Liên Hệ</h2>
-            <div class="contact-container">
-                <p>Rất mong nhận được sự kết nối từ mọi người!</p>
-                <a href="mailto:luuminhkhoiworking@gmail.com" class="contact-btn">
-                    <i class="fas fa-envelope"></i> Gửi Email
-                </a>
-                <br><br>
-                <p>Hoặc gọi trực tiếp: <strong>(+84) 833 204 240</strong></p>
+            <h2 class="section-header">Liên Lạc</h2>
+            <div class="content-frame center-text">
+                <p>Mọi thư từ và liên hệ xin gửi về:</p>
+                <p class="email-link">luuminhkhoiworking@gmail.com</p>
+                <p>Điện thoại: (+84) 833 204 240</p>
                 
-                <div class="bank-info">
-                    <h4>Thông tin ủng hộ (Donate)</h4>
-                    <p><strong>Vietcombank</strong></p>
-                    <p>STK: 1043092852</p>
-                    <p>Chủ TK: LUU MINH KHOI</p>
+                <div class="donation-box">
+                    <h4>Thông tin ủng hộ (Donation)</h4>
+                    <p>Vietcombank - 1043092852</p>
+                    <p>LUU MINH KHOI</p>
                 </div>
             </div>
         </section>
@@ -163,7 +155,9 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Lưu Minh Khôi. All Rights Reserved.</p>
+        <div class="footer-line"></div>
+        <p>&copy; MMXXVI Luu Minh Khoi. Omnia iura reservata.</p>
+        <p class="small-footer">Behold, I send you forth as sheep in the midst of wolves</p>
     </footer>
 
     <script src="script.js"></script>
