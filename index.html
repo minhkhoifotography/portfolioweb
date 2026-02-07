@@ -3,184 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minh Khoi | Academic Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Minh Khôi | Portfolio</title>
+    <style>
+        /* --- CÀI ĐẶT CHUNG & MÀU SẮC (DARK THEME) --- */
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --accent-color: #38bdf8; /* Màu xanh dương sáng */
+            --card-bg: #1e293b;
+            --nav-bg: rgba(15, 23, 42, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- THANH ĐIỀU HƯỚNG (NAVBAR) --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- PHẦN HERO (GIỚI THIỆU CHÍNH) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background: var(--accent-color);
+            color: #0f172a;
+            font-weight: 600;
+            border-radius: 5px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
+
+        /* --- CÁC SECTION CHUNG --- */
+        section {
+            padding: 5rem 10%;
+        }
+
+        h2.section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2.section-title::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- VỀ TÔI & KỸ NĂNG --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- DỰ ÁN NỔI BẬT --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .project-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* --- LIÊN HỆ --- */
+        .contact {
+            text-align: center;
+            background: #0b1120;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 1.5rem;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Đơn giản hóa cho mobile */
+        }
+    </style>
 </head>
 <body>
 
-    <header class="harvard-header">
-        <div class="header-inner">
-            <div class="logo-area">
-                <span class="shield-text">VERITAS</span> <div class="site-branding">
-                    <h1>Luu Minh Khoi</h1>
-                    <p>Academic Portfolio</p>
-                </div>
-            </div>
-            
-            <button class="mobile-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li><a href="#" class="tab-link active" data-target="home">Trang Chủ</a></li>
-                    <li><a href="#" class="tab-link" data-target="about">Tiểu Sử</a></li>
-                    <li><a href="#" class="tab-link" data-target="experience">Kinh Nghiệm</a></li>
-                    <li><a href="#" class="tab-link" data-target="awards">Thành Tích</a></li>
-                    <li><a href="#" class="tab-link" data-target="contact">Liên Hệ</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header>
+        <div class="logo">Minh Khôi.</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#about">Về tôi</a></li>
+                <li><a href="#projects">Dự án</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="container">
+    <section id="home" class="hero">
+        <h1>Xin chào, tôi là <span>Minh Khôi</span></h1>
+        <p id="typewriter">Học sinh trường THPT Chuyên Lê Quý Đôn - Nha Trang</p>
+        <a href="#about" class="btn">Tìm hiểu thêm</a>
+    </section>
 
-        <section id="home" class="tab-content active">
-            <div class="hero-block">
-                <div class="hero-text">
-                    <span class="category-tag">Giới thiệu / Introduction</span>
-                    <h2 class="hero-title">Hành trình 1000 ngày<br>tại Chuyên Lê Quý Đôn</h2>
-                    <p class="hero-desc">"Longe Dominus apparuit mihi. Et in caritate perpetua ideo attrerans."</p>
-                    <p class="hero-citation">— Jeremias 31:3</p>
-                </div>
-                <div class="hero-image">
-                    <img src="Pio.jpg" alt="Luu Minh Khoi" onerror="this.src='https://via.placeholder.com/400x500'">
-                </div>
+    <section id="about">
+        <h2 class="section-title">Về Bản Thân</h2>
+        <div class="about-container">
+            <div class="about-img">
+                <img src="https://via.placeholder.com/400x400/1e293b/38bdf8?text=MK" alt="Avatar Minh Khôi" style="width: 100%; border-radius: 10px; border: 2px solid var(--accent-color);">
             </div>
-            
-            <div class="stats-row">
-                <div class="stat-item">
-                    <span class="stat-number">2026</span>
-                    <span class="stat-label">Class of</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">CS</span>
-                    <span class="stat-label">Computer Science</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">Th</span>
-                    <span class="stat-label">Theology</span>
-                </div>
-            </div>
-        </section>
+            <div class="about-text">
+                <h3>Đam mê Công nghệ & Sáng tạo</h3>
+                <p>
+                    Mình là một học sinh tại trường <strong>THPT Chuyên Lê Quý Đôn, Nha Trang</strong>. 
+                    Mình yêu thích việc tạo ra những sản phẩm kỹ thuật số, từ những dòng code phức tạp đến những khung hình đầy cảm xúc.
+                </p>
+                <br>
+                <p>
+                    Ngoài việc học tập trên trường, mình dành thời gian để nghiên cứu sâu về lập trình Web và phát triển các dự án cá nhân (như minhkhoifotography).
+                </p>
 
-        <section id="about" class="tab-content">
-            <div class="section-header">
-                <h2>Thông Tin Cá Nhân</h2>
-                <div class="crimson-line"></div>
-            </div>
-            <div class="content-grid two-columns">
-                <div class="bio-text">
-                    <p class="lead-text">Lưu Minh Khôi là học sinh chuyên Tin tại trường THPT Chuyên Lê Quý Đôn, Khánh Hòa, với niềm đam mê sâu sắc dành cho Thần học và Nghệ thuật đa phương tiện.</p>
-                    <ul class="crimson-list">
-                        <li><strong>Ngày sinh:</strong> 16/11/2008</li>
-                        <li><strong>Tôn giáo:</strong> Công Giáo (Michaël – Pius)</li>
-                        <li><strong>Email:</strong> luuminhkhoiworking@gmail.com</li>
-                    </ul>
-                </div>
-                <div class="skills-box">
-                    <h3>Lĩnh vực quan tâm</h3>
-                    <div class="skill-tags">
-                        <span>Nhiếp ảnh</span>
-                        <span>Quay phim</span>
-                        <span>Sáng tạo nội dung</span>
-                        <span>Ngoại giao</span>
-                        <span>Thanh nhạc</span>
-                        <span>Thần học</span>
-                    </div>
+                <div class="skills-grid">
+                    <div class="skill-item">Web Dev</div>
+                    <div class="skill-item">Nhiếp ảnh</div>
+                    <div class="skill-item">Research</div>
+                    <div class="skill-item">Sáng tạo</div>
                 </div>
             </div>
-        </section>
-
-        <section id="experience" class="tab-content">
-            <div class="section-header">
-                <h2>Kinh Nghiệm & Sứ Vụ</h2>
-                <div class="crimson-line"></div>
-            </div>
-            <div class="cards-grid">
-                <article class="info-card">
-                    <div class="card-meta">2025 - Nay</div>
-                    <h3>Foreign Affairs Officer</h3>
-                    <p class="card-org">Conferentia Episcoporum Vietnamie</p>
-                </article>
-                <article class="info-card">
-                    <div class="card-meta">2025 - Nay</div>
-                    <h3>Professor of Theology</h3>
-                    <p class="card-org">Nha Trang Cathedral</p>
-                </article>
-                <article class="info-card">
-                    <div class="card-meta">2023 - 2025</div>
-                    <h3>Photographer</h3>
-                    <p class="card-org">Le Quy Don Media Club (LMC)</p>
-                </article>
-                <article class="info-card">
-                    <div class="card-meta">2017 - 2022</div>
-                    <h3>Professor of Vocal Music</h3>
-                    <p class="card-org">Stella Maris Major Seminary</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="awards" class="tab-content">
-            <div class="section-header">
-                <h2>Thành Tích Nổi Bật</h2>
-                <div class="crimson-line"></div>
-            </div>
-            <div class="awards-list-modern">
-                <div class="award-row">
-                    <div class="award-year">2025-26</div>
-                    <div class="award-content">
-                        <h3>Giải Nhất (1st Prize)</h3>
-                        <p>Le Quy Don Science and Engineering Fair</p>
-                    </div>
-                </div>
-                <div class="award-row">
-                    <div class="award-year">2024-25</div>
-                    <div class="award-content">
-                        <h3>Giải Nhì (2nd Prize)</h3>
-                        <p>Le Quy Don Science and Engineering Fair</p>
-                    </div>
-                </div>
-                <div class="award-row">
-                    <div class="award-year">2025</div>
-                    <div class="award-content">
-                        <h3>Papal Leo XIV's Blessing</h3>
-                        <p>Dedication to proclaiming the Gospel</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="tab-content">
-            <div class="contact-wrapper">
-                <h2>Kết nối</h2>
-                <p>Vui lòng liên hệ qua email hoặc số điện thoại cho các vấn đề công việc.</p>
-                
-                <a href="mailto:luuminhkhoiworking@gmail.com" class="crimson-button">Gửi Email</a>
-                
-                <div class="contact-details">
-                    <p><strong>Phone:</strong> (+84) 833 204 240</p>
-                    <div class="donate-info">
-                        <h4>Donate Info</h4>
-                        <p>Vietcombank: <strong>1043092852</strong> (LUU MINH KHOI)</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="harvard-footer">
-        <div class="footer-content">
-            <p>&copy; 2026 Luu Minh Khoi. All Rights Reserved.</p>
-            <p class="footer-motto">Veritas.</p>
         </div>
-    </footer>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="projects">
+        <h2 class="section-title">Dự Án & Hoạt Động</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Minh Khoi Photography</h3>
+                <p>Dự án lưu giữ những khoảnh khắc đẹp qua ống kính cá nhân. Website trưng bày các bộ sưu tập ảnh nghệ thuật và kỷ yếu.</p>
+                <br>
+                <a href="#" style="color: var(--accent-color); font-size: 0.9rem;">Xem chi tiết &rarr;</a>
+            </div>
+            <div class="project-card">
+                <h3>Hành trình 1000 ngày</h3>
+                <p>Website kỷ yếu kỹ thuật số dành cho trường THPT Chuyên Lê Quý Đôn. Tích hợp lưu bút, thư viện ảnh và trình phát nhạc.</p>
+                <br>
+                <a href="#" style="color: var(--accent-color); font-size: 0.9rem;">Xem chi tiết &rarr;</a>
+            </div>
+            <div class="project-card">
+                <h3>Nghiên cứu Khoa học</h3>
+                <p>Các bài nghiên cứu chuyên sâu về các chủ đề xã hội và triết học, thể hiện tư duy phản biện và góc nhìn đa chiều.</p>
+                <br>
+                <a href="#" style="color: var(--accent-color); font-size: 0.9rem;">Xem chi tiết &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title">Liên Hệ</h2>
+        <p>Kết nối với mình qua các nền tảng mạng xã hội</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">GitHub</a>
+            <a href="#">Email</a>
+        </div>
+        <p style="margin-top: 3rem; color: #64748b; font-size: 0.9rem;">
+            &copy; 2026 Minh Khôi. All rights reserved.
+        </p>
+    </section>
+
+    <script>
+        // Hiệu ứng gõ chữ đơn giản
+        const textElement = document.getElementById('typewriter');
+        const text = textElement.innerText;
+        textElement.innerText = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                textElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Tốc độ gõ
+            }
+        }
+        
+        // Chạy hiệu ứng khi tải trang
+        window.onload = typeWriter;
+    </script>
 </body>
 </html>
