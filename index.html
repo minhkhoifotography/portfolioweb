@@ -171,7 +171,8 @@
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
         .footer-col h4 { color: #999; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-weight: 700; }
         .footer-links a { display: block; color: var(--white); margin-bottom: 10px; font-weight: 600; }
-        .social-icons a { font-size: 1.5rem; margin-right: 20px; }
+        .social-icons a { font-size: 1.5rem; margin-right: 20px; color: var(--white); }
+        .social-icons a:hover { color: var(--harvard-crimson); }
 
         @media (max-width: 768px) {
             .hero-grid { grid-template-columns: 1fr; }
@@ -258,9 +259,11 @@
                         </p>
                     </div>
                     <div style="margin-top: 20px;">
-                         <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" style="margin-right: 15px; font-size: 1.2rem;"><i class="fa-brands fa-facebook"></i></a>
-                         <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" style="margin-right: 15px; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-                         <a href="https://locket.cam/minhkhoifoto" target="_blank" style="font-size: 1.2rem;"><i class="fa-solid fa-heart"></i></a>
+                         <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                         <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                         <a href="https://locket.cam/minhkhoifoto" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Locket"><i class="fa-solid fa-heart"></i></a>
+                         <a href="https://wa.me/qr/EHDNZFH6A7FWG1" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                         <a href="https://www.linkedin.com/in/minh-kh%C3%B4i-l%C6%B0u-0613133ab/" target="_blank" style="font-size: 1.2rem;" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
                     </div>
                 </div>
 
@@ -416,8 +419,11 @@
                 <div class="footer-col">
                     <h4>Connect</h4>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/minhkhoifoto.27"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="https://www.instagram.com/minhkhoifoto.27/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://locket.cam/minhkhoifoto" target="_blank"><i class="fa-solid fa-heart"></i></a>
+                        <a href="https://wa.me/qr/EHDNZFH6A7FWG1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.linkedin.com/in/minh-kh%C3%B4i-l%C6%B0u-0613133ab/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -433,10 +439,10 @@
 
     <script>
         function switchTab(tabId) {
-            // 1. Ẩn tất cả section nội dung (bao gồm cả Home/InFocus)
+            // 1. Ẩn tất cả section nội dung
             document.querySelectorAll('.content-section').forEach(el => {
                 el.classList.remove('active');
-                el.style.display = 'none'; // Buộc ẩn
+                el.style.display = 'none'; 
             });
             
             // 2. Xóa trạng thái active của nút
@@ -445,8 +451,7 @@
             // 3. Hiển thị Section được chọn
             const target = document.getElementById(tabId);
             if (target) {
-                target.style.display = 'block'; // Buộc hiện
-                // Timeout nhỏ để đảm bảo display:block ăn trước khi thêm class active (để animation chạy mượt)
+                target.style.display = 'block'; 
                 setTimeout(() => {
                     target.classList.add('active');
                 }, 10);
