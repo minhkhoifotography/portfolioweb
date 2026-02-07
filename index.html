@@ -3,275 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lưu Minh Khôi | Portfolio</title>
+    <title>Minh Khoi | Dev Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- CÀI ĐẶT CHUNG --- */
+        /* --- CORE VARIABLES (TECH THEME) --- */
         :root {
-            --bg-color: #0f172a;
-            --text-color: #e2e8f0;
-            --accent-color: #D4AF37;
-            --card-bg: #1e293b;
-            --nav-bg: #0f172a;
-            --timeline-line: #334155;
+            --bg-color: #0B1120;       /* Darker Navy */
+            --card-bg: #1E293B;        /* Slate */
+            --text-main: #F8FAFC;
+            --text-sub: #94A3B8;
+            --accent-color: #38BDF8;   /* Neon Cyan - Tech Vibe */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --border-color: #334155;
+            --code-font: 'JetBrains Mono', monospace;
+            --body-font: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
+            font-family: var(--body-font);
             line-height: 1.6;
             overflow-x: hidden;
+            /* Hiệu ứng nền Grid nhẹ */
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* --- LOGIC ẨN/HIỆN NGÔN NGỮ --- */
-        /* Mặc định hiển thị Tiếng Việt (class .vi), ẩn Tiếng Anh (class .en) */
+        /* --- UTILS --- */
         body.lang-vi .content-en { display: none !important; }
         body.lang-en .content-vi { display: none !important; }
-
         a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
+        
+        /* Scrollbar đẹp cho dân code */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
-        /* --- HEADER & NAV --- */
+        /* --- HEADER (Glassmorphism) --- */
         header {
             position: fixed; top: 0; width: 100%;
-            background: var(--nav-bg);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(11, 17, 32, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
             z-index: 1000; padding: 0 5%;
             display: flex; justify-content: space-between; align-items: center;
             height: 70px;
         }
 
         .logo {
-            font-size: 1.5rem; font-weight: 700; color: var(--accent-color);
-            text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+            font-family: var(--code-font);
+            font-weight: 700; color: var(--accent-color);
+            font-size: 1.2rem; cursor: pointer;
+            letter-spacing: -1px;
         }
+        .logo::before { content: "<"; color: var(--text-sub); margin-right: 2px;}
+        .logo::after { content: " />"; color: var(--text-sub); margin-left: 2px;}
 
-        .nav-container { display: flex; align-items: center; gap: 2rem; }
-
-        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links { display: flex; gap: 2rem; }
 
         .nav-btn {
-            background: none; border: none; color: var(--text-color);
-            font-size: 0.95rem; font-weight: 500; cursor: pointer;
-            padding: 0.5rem 0; position: relative; transition: 0.3s;
+            background: none; border: none; color: var(--text-sub);
+            font-family: var(--code-font); font-size: 0.9rem; 
+            cursor: pointer; transition: 0.3s; position: relative;
         }
 
-        .nav-btn:hover, .nav-btn.active { color: var(--accent-color); }
-        .nav-btn::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: 0; left: 0; background-color: var(--accent-color);
-            transition: width 0.3s;
+        .nav-btn:hover, .nav-btn.active { color: var(--accent-color); text-shadow: 0 0 10px var(--accent-glow); }
+        
+        /* Dấu nhắc lệnh dưới menu active */
+        .nav-btn.active::before {
+            content: "> "; color: var(--accent-color);
+            position: absolute; left: -15px; opacity: 1;
         }
-        .nav-btn.active::after { width: 100%; }
 
-        /* Nút đổi ngôn ngữ */
-        .lang-switch {
-            border: 1px solid var(--accent-color);
+        /* --- FLOATING ACTION BUTTON (LANGUAGE) --- */
+        .fab-language {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 60px; height: 60px;
+            background: rgba(30, 41, 59, 0.9);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
             color: var(--accent-color);
-            background: transparent;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: var(--code-font); font-weight: bold; font-size: 0.8rem;
+            cursor: pointer; z-index: 2000;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
-        .lang-switch:hover { background: var(--accent-color); color: var(--bg-color); }
 
-        /* --- TAB CONTENT LOGIC --- */
+        .fab-language:hover {
+            transform: scale(1.1) rotate(360deg);
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--accent-color);
+        }
+
+        /* --- MAIN SECTIONS --- */
         .tab-content {
             display: none; padding: 8rem 10% 5rem 10%;
-            min-height: 100vh; animation: fadeIn 0.5s ease-in-out;
+            min-height: 100vh;
         }
-        .tab-content.active { display: block; }
-        #home.active { display: flex; }
+        .tab-content.active { display: block; animation: slideUp 0.6s ease-out; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- HERO SECTION --- */
-        #home {
-            flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding-top: 0; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%);
-        }
-        .hero-title { font-size: 3.5rem; margin-bottom: 0.5rem; }
-        .hero-title span { color: var(--accent-color); }
-        .hero-motto { font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; font-style: italic; }
+        /* --- HERO SECTION (Terminal Style) --- */
+        #home.active { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
         
-        .cta-btn {
-            padding: 0.8rem 2rem; color: var(--accent-color); font-weight: 600;
-            border-radius: 30px; border: 2px solid var(--accent-color); cursor: pointer; transition: 0.3s;
+        .terminal-window {
+            width: 100%; max-width: 800px;
+            background: #171717;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
         }
-        .cta-btn:hover { background: var(--accent-color); color: #0f172a; }
+        .terminal-header {
+            background: #262626; padding: 10px 15px;
+            display: flex; gap: 8px; align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #EF4444; } .yellow { background: #EAB308; } .green { background: #22C55E; }
+        
+        .terminal-body { padding: 30px; font-family: var(--code-font); }
+        
+        .command-line { color: var(--accent-color); margin-bottom: 10px; }
+        .command-line::before { content: "~/minhkhoi/portfolio $ "; color: var(--text-sub); }
+        
+        .output { color: var(--text-main); margin-bottom: 20px; white-space: pre-wrap;}
+        .highlight { color: #A78BFA; } /* Purple for contrast */
+        .string { color: #F472B6; } /* Pink for strings */
 
-        /* --- ABOUT STYLES --- */
+        .typewriter-cursor::after {
+            content: '_'; animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- ABOUT & CARDS --- */
         .section-title {
-            font-size: 2rem; margin-bottom: 3rem; text-align: center;
-            color: var(--accent-color); text-transform: uppercase; letter-spacing: 3px;
+            font-family: var(--code-font); font-size: 2rem; margin-bottom: 3rem;
+            color: var(--accent-color); display: flex; align-items: center; gap: 10px;
+        }
+        .section-title::before { content: "#"; color: var(--text-sub); opacity: 0.5; }
+
+        .about-container { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: start; }
+        
+        .profile-card {
+            background: var(--card-bg);
+            padding: 1rem; border-radius: 12px;
+            border: 1px solid var(--border-color);
             position: relative;
         }
-        .section-title::after {
-            content: ''; width: 60px; height: 3px; background: var(--accent-color);
-            position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+        .profile-card img { width: 100%; border-radius: 8px; filter: grayscale(20%); transition: 0.5s; }
+        .profile-card:hover img { filter: grayscale(0%); }
+        
+        /* Code Box for Info */
+        .code-box {
+            background: #111827; padding: 2rem;
+            border-radius: 12px; border: 1px solid var(--border-color);
+            font-family: var(--code-font); font-size: 0.9rem;
+        }
+        .prop { color: #38BDF8; }
+        .val { color: #A5F3FC; }
+
+        /* Tags Design */
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .tech-tag {
+            background: rgba(56, 189, 248, 0.1); color: var(--accent-color);
+            padding: 5px 12px; border-radius: 4px; /* Vuông vắn hơn */
+            font-family: var(--code-font); font-size: 0.85rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: 0.3s;
+        }
+        .tech-tag:hover { background: var(--accent-color); color: var(--bg-color); transform: translateY(-2px); }
+
+        /* --- TIMELINE (Modern Line) --- */
+        .timeline-item {
+            position: relative; padding-left: 40px; margin-bottom: 40px;
+            border-left: 2px solid var(--border-color);
+        }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; background: var(--bg-color);
+            border: 2px solid var(--accent-color); border-radius: 50%;
+        }
+        .timeline-item:hover::before { background: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); }
+        
+        .time-badge {
+            display: inline-block; padding: 4px 8px;
+            background: var(--border-color); border-radius: 4px;
+            font-family: var(--code-font); font-size: 0.8rem; margin-bottom: 8px;
         }
 
-        .about-container { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; }
-        .about-img img { width: 100%; border-radius: 15px; border: 2px solid var(--accent-color); }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-        .info-item h4 { color: #94a3b8; font-size: 0.9rem; }
-        .info-item span { font-size: 1.1rem; font-weight: 600; }
-        .hobby-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
-        .hobby-tag { background: #334155; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; border: 1px solid #475569; }
-
-        /* --- TIMELINE STYLES --- */
-        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
-        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--timeline-line); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
-        .container { padding: 10px 40px; position: relative; width: 50%; }
-        .container::after { content: ''; position: absolute; width: 16px; height: 16px; right: -8px; background-color: var(--bg-color); border: 2px solid var(--accent-color); top: 15px; border-radius: 50%; z-index: 1; }
-        .left { left: 0; }
-        .right { left: 50%; }
-        .left::before { content: " "; height: 0; position: absolute; top: 18px; width: 0; z-index: 1; right: 30px; border: medium solid white; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--card-bg); }
-        .right::before { content: " "; height: 0; position: absolute; top: 18px; width: 0; z-index: 1; left: 30px; border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent; }
-        .right::after { left: -8px; }
-        .content { padding: 20px 30px; background-color: var(--card-bg); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s; }
-        .content:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-        .content h3 { color: var(--accent-color); font-size: 1.1rem; }
-        .content h4 { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 5px; }
-        .content p { font-size: 0.85rem; color: #94a3b8; }
-
-        /* --- AWARDS STYLES --- */
-        .awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-        .award-card { background: var(--card-bg); padding: 2rem; border-radius: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
-        .award-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem; }
-
-        /* --- CONTACT STYLES --- */
-        .contact-wrapper { text-align: center; margin-top: 2rem; }
-        .social-links { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
-        .social-btn { width: 60px; height: 60px; border-radius: 50%; background: var(--card-bg); color: var(--text-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
-        .social-btn:hover { background: var(--accent-color); color: #0f172a; transform: translateY(-5px); }
+        /* --- AWARDS (Grid) --- */
+        .award-card {
+            background: var(--card-bg); padding: 2rem;
+            border: 1px solid var(--border-color); border-radius: 8px;
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .award-card:hover { border-color: var(--accent-color); transform: translateY(-5px); }
+        .award-icon { color: #FBBF24; font-size: 2rem; margin-bottom: 1rem; } /* Gold icon for awards */
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.2rem; }
-            .about-container { grid-template-columns: 1fr; }
-            .info-grid { grid-template-columns: 1fr; }
-            .nav-container { 
-                position: fixed; bottom: 0; left: 0; width: 100%; 
-                background: var(--nav-bg); padding: 1rem; 
-                justify-content: space-around; border-top: 1px solid var(--accent-color);
-                flex-direction: row-reverse; /* Đảo ngược để nút lang không bị che */
+            .nav-links { 
+                position: fixed; bottom: 0; left: 0; width: 100%;
+                background: rgba(11, 17, 32, 0.95); padding: 10px;
+                justify-content: space-around; border-top: 1px solid var(--border-color);
+                backdrop-filter: blur(10px);
             }
-            .nav-links { gap: 1rem; width: 100%; justify-content: space-around; }
-            .nav-btn { font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-            header { padding: 0.5rem 1rem; justify-content: space-between; }
-            .nav-btn .content-vi, .nav-btn .content-en { display: block; } /* Fix hiển thị trên mobile */
-            .lang-switch { position: absolute; top: 20px; right: 20px; } /* Đưa nút lang lên top trên mobile */
-            .tab-content { padding-bottom: 100px; }
+            .nav-btn { font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+            .nav-btn.active::before { content: ''; } /* Tắt dấu nhắc lệnh trên mobile */
+            .nav-btn i { font-size: 1.2rem; margin-bottom: 2px; }
+            
+            .about-container { grid-template-columns: 1fr; }
+            .terminal-window { margin-top: 20px; }
+            .fab-language { bottom: 80px; width: 50px; height: 50px; font-size: 0.7rem; } /* Né menu bottom */
         }
     </style>
 </head>
 <body class="lang-vi">
 
     <header>
-        <div class="logo" onclick="switchTab('home')">Minh Khôi.</div>
-        
-        <button class="lang-switch" onclick="toggleLanguage()">VN / EN</button>
-
-        <nav class="nav-container">
-            <div class="nav-links">
-                <button class="nav-btn active" onclick="switchTab('home')">
-                    <span class="content-vi">Trang chủ</span><span class="content-en">Home</span>
-                </button>
-                <button class="nav-btn" onclick="switchTab('about')">
-                    <span class="content-vi">Về tôi</span><span class="content-en">About</span>
-                </button>
-                <button class="nav-btn" onclick="switchTab('experience')">
-                    <span class="content-vi">Hành trình</span><span class="content-en">Journey</span>
-                </button>
-                <button class="nav-btn" onclick="switchTab('awards')">
-                    <span class="content-vi">Thành tích</span><span class="content-en">Awards</span>
-                </button>
-                <button class="nav-btn" onclick="switchTab('contact')">
-                    <span class="content-vi">Liên hệ</span><span class="content-en">Contact</span>
-                </button>
-            </div>
+        <div class="logo" onclick="switchTab('home')">MinhKhoi</div>
+        <nav class="nav-links">
+            <button class="nav-btn active" onclick="switchTab('home')">
+                <span class="content-vi">~/trang-chủ</span><span class="content-en">~/home</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('about')">
+                <span class="content-vi">./về-tôi</span><span class="content-en">./about</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('experience')">
+                <span class="content-vi">./hành-trình</span><span class="content-en">./journey</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('awards')">
+                <span class="content-vi">./thành-tích</span><span class="content-en">./awards</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('contact')">
+                <span class="content-vi">./liên-hệ</span><span class="content-en">./contact</span>
+            </button>
         </nav>
     </header>
 
+    <button class="fab-language" onclick="toggleLanguage()" title="Switch Language">
+        <div>VN</div>
+        <div style="height: 1px; width: 20px; background: currentColor; margin: 2px 0;"></div>
+        <div>EN</div>
+    </button>
+
     <section id="home" class="tab-content active">
-        <h1 class="hero-title">
-            <span class="content-vi">Xin chào, tôi là </span>
-            <span class="content-en">Hello, I am </span>
-            <span>Lưu Minh Khôi</span>
-        </h1>
-        <p class="hero-motto">"Longe Dominus apparuit mihi. Et in caritate perpetua ideo attrerans."</p>
-        <div style="margin-bottom: 2rem; color: #94a3b8;">
-            <span class="content-vi">Học sinh THPT Chuyên Lê Quý Đôn | Photographer | Đam mê Thần học</span>
-            <span class="content-en">Student at Le Quy Don High School for the Gifted | Photographer | Theology Enthusiast</span>
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <span style="font-family: var(--code-font); font-size: 0.8rem; color: #999; margin-left: 10px;">bash — 80x24</span>
+            </div>
+            <div class="terminal-body">
+                <div class="command-line">whoami</div>
+                <div class="output">
+                    <h1 style="font-size: 1.8rem; color: var(--accent-color); margin-bottom: 10px;">Lưu Minh Khôi</h1>
+                    <p class="content-vi">> Học sinh Chuyên Tin (High School Student)</p>
+                    <p class="content-en">> High School Student</p>
+                    <p>> Photographer & Theology Enthusiast</p>
+                    <p class="hero-motto" style="color: #64748b; font-style: italic; margin-top: 10px;">"Longe Dominus apparuit mihi. Et in caritate perpetua ideo attrerans."</p>
+                </div>
+
+                <div class="command-line">npm run list-skills</div>
+                <div class="output tech-tags">
+                    <span class="tech-tag">Photography</span>
+                    <span class="tech-tag">Design</span>
+                    <span class="tech-tag">Web Dev</span>
+                    <span class="tech-tag">Diplomacy</span>
+                </div>
+
+                <div class="command-line"><span class="typewriter-cursor"></span></div>
+                
+                <div style="margin-top: 30px;">
+                    <button onclick="switchTab('about')" style="background: var(--accent-color); color: #000; border: none; padding: 10px 20px; font-family: var(--code-font); font-weight: bold; cursor: pointer; border-radius: 4px;">
+                        <span class="content-vi">Run Program: Explore_Me.exe</span>
+                        <span class="content-en">Run Program: Explore_Me.exe</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <button class="cta-btn" onclick="switchTab('about')">
-            <span class="content-vi">Tìm hiểu thêm</span>
-            <span class="content-en">Learn More</span>
-        </button>
     </section>
 
     <section id="about" class="tab-content">
         <h2 class="section-title">
-            <span class="content-vi">Về Bản Thân</span>
-            <span class="content-en">About Me</span>
+            <span class="content-vi">Thông Tin</span><span class="content-en">Profile</span>
         </h2>
         <div class="about-container">
-            <div class="about-img">
-                <img src="Pio.jpg" alt="Lưu Minh Khôi" onerror="this.src='https://via.placeholder.com/400x400/1e293b/D4AF37?text=LMK'">
-                <p style="text-align: center; margin-top: 10px; font-style: italic; color: #64748b;">@minhkhoifoto.27</p>
+            <div class="profile-card">
+                <img src="Pio.jpg" alt="Lưu Minh Khôi" onerror="this.src='https://via.placeholder.com/400x400/1e293b/38BDF8?text=AVATAR'">
+                <p style="text-align: center; margin-top: 15px; font-family: var(--code-font); color: var(--accent-color);">
+                    <i class="fa-brands fa-instagram"></i> @minhkhoifoto.27
+                </p>
             </div>
-            <div class="about-text">
-                <h3 style="color: var(--accent-color); font-size: 1.5rem; margin-bottom: 1.5rem;">
-                    <span class="content-vi">Thông tin cá nhân</span>
-                    <span class="content-en">Personal Information</span>
-                </h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <h4><span class="content-vi">Ngày sinh</span><span class="content-en">Date of Birth</span></h4>
-                        <span>16/11/2008</span>
+            
+            <div>
+                <div class="code-box">
+                    <div style="color: #64748b; margin-bottom: 10px;">// user_config.json</div>
+                    <div><span class="highlight">const</span> <span class="prop">User</span> = {</div>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">name</span>: <span class="string">"Lưu Minh Khôi"</span>,
                     </div>
-                    <div class="info-item">
-                        <h4><span class="content-vi">Trường học</span><span class="content-en">School</span></h4>
-                        <span>THPT Chuyên Lê Quý Đôn</span>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">dob</span>: <span class="string">"16/11/2008"</span>,
                     </div>
-                    <div class="info-item">
-                        <h4><span class="content-vi">Tôn giáo</span><span class="content-en">Religion</span></h4>
-                        <span>Catholic (Michaël – Pius)</span>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">role</span>: <span class="string">"Student @ Le Quy Don High School"</span>,
                     </div>
-                    <div class="info-item">
-                        <h4>Email</h4>
-                        <span>luuminhkhoiworking@gmail.com</span>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">religion</span>: <span class="string">"Catholic (Michaël – Pius)"</span>,
                     </div>
-                    <div class="info-item">
-                        <h4><span class="content-vi">Số điện thoại</span><span class="content-en">Phone</span></h4>
-                        <span>(+84) 833 204 240</span>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">email</span>: <span class="string">"luuminhkhoiworking@gmail.com"</span>,
                     </div>
-                    <div class="info-item">
-                        <h4><span class="content-vi">Giới tính</span><span class="content-en">Sex</span></h4>
-                        <span><span class="content-vi">Nam</span><span class="content-en">Male</span></span>
+                    <div style="padding-left: 20px;">
+                        <span class="prop">hobbies</span>: [
+                        <span class="string">"Photo"</span>, <span class="string">"Design"</span>, <span class="string">"Theology"</span>
+                        ]
                     </div>
+                    <div>};</div>
                 </div>
-                
-                <h3 style="color: var(--accent-color); font-size: 1.2rem; margin-top: 2rem;">
-                    <span class="content-vi">Sở thích & Đam mê</span>
-                    <span class="content-en">Hobbies & Passions</span>
-                </h3>
-                <div class="hobby-tags">
-                    <span class="hobby-tag">📷 Photography</span>
-                    <span class="hobby-tag">🎥 Videography</span>
-                    <span class="hobby-tag">🎨 Design</span> <span class="hobby-tag">✍️ Content Creator</span>
-                    <span class="hobby-tag">🤝 Diplomatic</span>
-                    <span class="hobby-tag">🎼 Vocal Music</span>
-                    <span class="hobby-tag">✝️ Theology</span>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-family: var(--code-font); color: var(--text-main); margin-bottom: 1rem;">
+                        <span class="content-vi">> Kỹ năng & Sở thích</span><span class="content-en">> Skills & Hobbies</span>
+                    </h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag"><i class="fa-solid fa-camera"></i> Photography</span>
+                        <span class="tech-tag"><i class="fa-solid fa-pen-nib"></i> Design</span>
+                        <span class="tech-tag"><i class="fa-solid fa-video"></i> Videography</span>
+                        <span class="tech-tag"><i class="fa-solid fa-handshake"></i> Diplomatic</span>
+                        <span class="tech-tag"><i class="fa-solid fa-music"></i> Vocal Music</span>
+                        <span class="tech-tag"><i class="fa-solid fa-book-bible"></i> Theology</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -279,133 +357,118 @@
 
     <section id="experience" class="tab-content">
         <h2 class="section-title">
-            <span class="content-vi">Hành trình & Kinh nghiệm</span>
-            <span class="content-en">Journey & Experience</span>
+            <span class="content-vi">Timeline</span><span class="content-en">Timeline</span>
         </h2>
-        <div class="timeline">
-            <div class="container left">
-                <div class="content">
-                    <h3>Foreign Affairs Officer</h3>
-                    <h4>2025 - Present | Conferentia Episcoporum Vietnamie</h4>
-                    <p class="content-vi">Phụ trách công tác đối ngoại và ngoại giao.</p>
-                    <p class="content-en">In charge of external affairs and diplomatic relations.</p>
-                </div>
+        <div style="max-width: 800px;">
+            <div class="timeline-item">
+                <span class="time-badge">2025 - Present</span>
+                <h3 style="color: var(--accent-color); font-family: var(--code-font);">Foreign Affairs Officer</h3>
+                <p style="color: var(--text-sub); font-size: 0.9rem;">Conferentia Episcoporum Vietnamie</p>
+                <p class="content-vi" style="margin-top: 5px;">Phụ trách công tác đối ngoại và ngoại giao.</p>
+                <p class="content-en" style="margin-top: 5px;">In charge of external affairs and diplomatic relations.</p>
             </div>
-            <div class="container right">
-                <div class="content">
-                    <h3>Mentor & Researcher</h3>
-                    <h4>2025 | Le Quy Don Science & Engineering Fair</h4>
-                    <p class="content-vi">Hướng dẫn và tham gia nghiên cứu khoa học kỹ thuật.</p>
-                    <p class="content-en">Instructing and participating in scientific and engineering research.</p>
-                </div>
+            
+            <div class="timeline-item">
+                <span class="time-badge">2025</span>
+                <h3 style="color: var(--accent-color); font-family: var(--code-font);">Mentor & Researcher</h3>
+                <p style="color: var(--text-sub); font-size: 0.9rem;">Le Quy Don Science & Engineering Fair</p>
+                <p class="content-vi" style="margin-top: 5px;">Hướng dẫn và tham gia nghiên cứu khoa học kỹ thuật.</p>
+                <p class="content-en" style="margin-top: 5px;">Research mentor for science and engineering projects.</p>
             </div>
-            <div class="container left">
-                <div class="content">
-                    <h3>Photographer of LMC</h3>
-                    <h4>2023 - 2025 | Le Quy Don Media Club</h4>
-                    <p class="content-vi">Nhiếp ảnh gia, ghi lại những khoảnh khắc sự kiện của trường.</p>
-                    <p class="content-en">Photographer, capturing moments at school events.</p>
-                </div>
+
+            <div class="timeline-item">
+                <span class="time-badge">2023 - 2025</span>
+                <h3 style="color: var(--accent-color); font-family: var(--code-font);">Photographer of LMC</h3>
+                <p style="color: var(--text-sub); font-size: 0.9rem;">Le Quy Don Media Club</p>
             </div>
-            <div class="container right">
-                <div class="content">
-                    <h3>Head of Collaborator (Tech & Control)</h3>
-                    <h4>2024 | MSOCE Management</h4>
-                    <p class="content-vi">Quản lý kỹ thuật và điều phối cộng tác viên.</p>
-                    <p class="content-en">Technical management and collaborator coordination.</p>
-                </div>
-            </div>
-            <div class="container left">
-                <div class="content">
-                    <h3>Professor of Vocal Music</h3>
-                    <h4>2017 - 2022 | Stella Maris Major Seminary</h4>
-                    <p class="content-vi">Hoạt động trong lĩnh vực thanh nhạc và thánh nhạc.</p>
-                    <p class="content-en">Active in the field of vocal and sacred music.</p>
-                </div>
+
+            <div class="timeline-item">
+                <span class="time-badge">2024</span>
+                <h3 style="color: var(--accent-color); font-family: var(--code-font);">Head of Collaborator (Tech & Control)</h3>
+                <p style="color: var(--text-sub); font-size: 0.9rem;">MSOCE Management</p>
             </div>
         </div>
     </section>
 
     <section id="awards" class="tab-content">
         <h2 class="section-title">
-            <span class="content-vi">Thành tích nổi bật</span>
-            <span class="content-en">Honors & Awards</span>
+            <span class="content-vi">Thành Tích</span><span class="content-en">Achievements</span>
         </h2>
-        <div class="awards-grid">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
             <div class="award-card">
                 <div class="award-icon"><i class="fa-solid fa-trophy"></i></div>
-                <h3>
-                    <span class="content-vi">Giải Nhất (1st Prize)</span>
-                    <span class="content-en">First Prize</span>
-                </h3>
-                <p style="color: #94a3b8;">Le Quy Don Science and Engineering Fair <br> 2025-2026</p>
+                <h3 style="font-family: var(--code-font);">1st Prize</h3>
+                <p style="color: var(--text-sub);">Le Quy Don Science & Engineering Fair <br> 2025-2026</p>
             </div>
             <div class="award-card">
                 <div class="award-icon"><i class="fa-solid fa-medal"></i></div>
-                <h3>
-                    <span class="content-vi">Giải Nhì (2nd Prize)</span>
-                    <span class="content-en">Second Prize</span>
-                </h3>
-                <p style="color: #94a3b8;">Le Quy Don Science and Engineering Fair <br> 2024-2025</p>
+                <h3 style="font-family: var(--code-font);">2nd Prize</h3>
+                <p style="color: var(--text-sub);">Le Quy Don Science & Engineering Fair <br> 2024-2025</p>
             </div>
             <div class="award-card">
                 <div class="award-icon"><i class="fa-solid fa-certificate"></i></div>
-                <h3>
-                    <span class="content-vi">Giải Ba (3rd Prize)</span>
-                    <span class="content-en">Third Prize</span>
-                </h3>
-                <p style="color: #94a3b8;">Khanh Hoa Science and Engineering Fair <br> 2024-2025</p>
+                <h3 style="font-family: var(--code-font);">3rd Prize</h3>
+                <p style="color: var(--text-sub);">Khanh Hoa Science & Engineering Fair <br> 2024-2025</p>
             </div>
             <div class="award-card">
                 <div class="award-icon"><i class="fa-solid fa-scroll"></i></div>
-                <h3>Papal Leo XIV's Blessing</h3>
-                <p style="color: #94a3b8;">Dedication to proclaiming the Gospel <br> (2025)</p>
+                <h3 style="font-family: var(--code-font);">Papal Leo XIV's Blessing</h3>
+                <p style="color: var(--text-sub);">Dedication to proclaiming the Gospel (2025)</p>
             </div>
         </div>
     </section>
 
     <section id="contact" class="tab-content">
         <h2 class="section-title">
-            <span class="content-vi">Liên Hệ</span>
-            <span class="content-en">Contact</span>
+            <span class="content-vi">Liên Hệ</span><span class="content-en">Connect</span>
         </h2>
-        <div class="contact-wrapper">
-            <p style="margin-bottom: 2rem; color: #94a3b8;">
-                <span class="content-vi">Kết nối với mình qua các nền tảng mạng xã hội</span>
-                <span class="content-en">Connect with me via social media</span>
+        <div style="text-align: center; margin-top: 4rem;">
+            <p style="color: var(--text-sub); margin-bottom: 2rem; font-family: var(--code-font);">
+                <span class="content-vi">/* Bắt đầu cuộc trò chuyện mới */</span>
+                <span class="content-en">/* Start a new conversation */</span>
             </p>
-            <div class="social-links">
-                <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-                <a href="mailto:luuminhkhoiworking@gmail.com" class="social-btn"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://locket.cam/minhkhoifoto" target="_blank" class="social-btn"><i class="fa-solid fa-heart"></i></a>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" class="tech-tag" style="font-size: 1.2rem; padding: 15px 25px;">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" class="tech-tag" style="font-size: 1.2rem; padding: 15px 25px;">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+                <a href="mailto:luuminhkhoiworking@gmail.com" class="tech-tag" style="font-size: 1.2rem; padding: 15px 25px;">
+                    <i class="fa-solid fa-envelope"></i> Email
+                </a>
+                 <a href="https://locket.cam/minhkhoifoto" target="_blank" class="tech-tag" style="font-size: 1.2rem; padding: 15px 25px;">
+                    <i class="fa-solid fa-heart"></i> Locket
+                </a>
             </div>
-            <p style="margin-top: 4rem; color: #64748b; font-size: 0.9rem;">
-                &copy; 2026 Lưu Minh Khôi. All rights reserved.
+
+            <p style="margin-top: 5rem; color: #475569; font-size: 0.8rem; font-family: var(--code-font);">
+                git commit -m "Updated by Minh Khoi 2026"
             </p>
         </div>
     </section>
 
     <script>
-        // Chuyển Tab
         function switchTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-
+            // Remove active classes
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            // Add active to current
             document.getElementById(tabId).classList.add('active');
-
-            buttons.forEach(btn => {
+            
+            // Highlight nav button (tìm nút có chứa function call tương ứng)
+            const btns = document.querySelectorAll('.nav-btn');
+            btns.forEach(btn => {
                 if(btn.getAttribute('onclick').includes(tabId)) {
                     btn.classList.add('active');
                 }
             });
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Chuyển Ngôn Ngữ
         function toggleLanguage() {
             const body = document.body;
             if (body.classList.contains('lang-vi')) {
