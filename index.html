@@ -118,8 +118,10 @@
 
         /* --- CONTENT SECTIONS --- */
         .content-section { padding: 80px 0; background-color: var(--white); display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.8s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Khi active thì hiện block và chạy animation */
+        .content-section.active { display: block; animation: fadeIn 0.5s ease-out; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .section-header { margin-bottom: 50px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
         .section-header h2 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--harvard-crimson); }
@@ -209,7 +211,7 @@
         <div id="lang-text-fab">EN</div>
     </button>
 
-    <section id="home" class="content-section active" style="padding: 0; display: block;">
+    <section id="home" class="content-section active" style="display: block; padding: 0;">
         <div class="hero">
             <div class="hero-grid">
                 <div class="hero-image"></div>
@@ -431,34 +433,35 @@
 
     <script>
         function switchTab(tabId) {
+            // 1. Ẩn tất cả section nội dung (bao gồm cả Home/InFocus)
             document.querySelectorAll('.content-section').forEach(el => {
                 el.classList.remove('active');
-                if(tabId !== 'home') el.style.display = 'none';
+                el.style.display = 'none'; // Buộc ẩn
             });
+            
+            // 2. Xóa trạng thái active của nút
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
             
+            // 3. Hiển thị Section được chọn
             const target = document.getElementById(tabId);
             if (target) {
-                target.style.display = 'block';
-                void target.offsetWidth; 
-                target.classList.add('active');
+                target.style.display = 'block'; // Buộc hiện
+                // Timeout nhỏ để đảm bảo display:block ăn trước khi thêm class active (để animation chạy mượt)
+                setTimeout(() => {
+                    target.classList.add('active');
+                }, 10);
             }
 
+            // 4. Highlight nút được chọn
             const btns = document.querySelectorAll('.nav-btn');
             btns.forEach(btn => {
-                if(btn.getAttribute('onclick').includes(tabId)) {
+                if(btn.getAttribute('onclick').includes("'" + tabId + "'")) {
                     btn.classList.add('active');
                 }
             });
 
-            if (tabId !== 'home') {
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            // 5. Luôn cuộn lên đầu trang
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function toggleLanguage() {
