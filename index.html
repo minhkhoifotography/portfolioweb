@@ -40,7 +40,7 @@
             overflow-x: hidden;
         }
 
-        /* [NÂNG CẤP 1] Scroll Progress Bar */
+        /* Progress Bar */
         .progress-container {
             width: 100%; height: 4px; background: #ccc;
             position: fixed; top: 0; left: 0; z-index: 9999;
@@ -116,22 +116,23 @@
         #backToTop { opacity: 0; visibility: hidden; }
         #backToTop.show { opacity: 1; visibility: visible; }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (ĐÃ SỬA LỖI ZOOM ẢNH) --- */
         .hero { background-color: var(--harvard-black); color: var(--white); position: relative; overflow: hidden; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 550px; }
         
         .hero-image {
             background-image: url('Pio_02.png'); 
-            background-size: cover; 
-            background-position: center; 
+            /* SỬA ĐỔI QUAN TRỌNG TẠI ĐÂY: */
+            background-size: contain; /* Đảm bảo ảnh nằm gọn trong khung, không bị cắt */
+            background-repeat: no-repeat; /* Không lặp lại ảnh */
+            background-position: center; /* Căn giữa */
             position: relative;
-            /* [NÂNG CẤP 3] Parallax Effect */
-            background-attachment: fixed;
+            background-color: var(--harvard-black); /* Màu nền đen lấp đầy khoảng trống nếu ảnh không vừa khít */
         }
-        /* Fallback on mobile (tắt parallax trên mobile để mượt hơn) */
-        @media (max-width: 768px) { .hero-image { background-attachment: scroll; } }
-
-        .hero-image::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.2); }
+        
+        /* Hiệu ứng bóng mờ nhẹ để ảnh hòa vào nền đen */
+        .hero-image::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.1); }
+        
         .hero-content { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; background: var(--harvard-black); }
         
         .section-label {
@@ -143,7 +144,7 @@
         .hero-title { font-family: var(--font-serif); font-size: 3rem; line-height: 1.1; margin-bottom: 25px; }
         .hero-desc { font-size: 1.1rem; color: #cccccc; margin-bottom: 40px; font-weight: 300; }
         
-        /* [NÂNG CẤP 2] Typewriter Cursor */
+        /* Typewriter Cursor */
         .typing-text::after, .typing-text-en::after {
             content: '|';
             animation: blink 0.7s infinite;
@@ -209,7 +210,7 @@
         .award-box:hover { background: #e5e5e5; }
         .award-icon { font-size: 2rem; color: var(--harvard-crimson); }
 
-        /* Portfolio Grid */
+        /* Portfolio Grid (Đã tắt hiệu ứng Zoom khi hover để không bị rối) */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .portfolio-card {
             background: #fff; border: 1px solid #eee; overflow: hidden;
@@ -219,10 +220,8 @@
         
         .portfolio-img {
             height: 200px; background-color: #ddd; background-size: cover; background-position: center; position: relative;
-            transition: transform 0.5s ease;
+            /* Đã tắt hiệu ứng scale tại đây */
         }
-        /* [NÂNG CẤP] Zoom ảnh khi hover */
-        .portfolio-card:hover .portfolio-img { transform: scale(1.05); }
 
         .portfolio-tag {
             position: absolute; top: 15px; right: 15px;
@@ -244,7 +243,7 @@
 
         @media (max-width: 768px) {
             .hero-grid { grid-template-columns: 1fr; }
-            .hero-image { height: 300px; }
+            .hero-image { height: 300px; background-size: cover; /* Trên mobile để cover cho đẹp hơn */ }
             .grid-3, .award-grid, .footer-grid, .portfolio-grid { grid-template-columns: 1fr; }
             .header-inner { height: auto; padding: 15px 0; flex-direction: column; gap: 10px; }
             .nav-links { gap: 15px; font-size: 0.8rem; }
@@ -295,6 +294,7 @@
         <div class="hero">
             <div class="hero-grid">
                 <div class="hero-image"></div>
+                
                 <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                     <div class="section-label">In Focus</div>
                     <h1 class="hero-title">
@@ -352,11 +352,11 @@
                         </p>
                     </div>
                     <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px;">
-                         <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" style="font-size: 1.2rem;"><i class="fa-brands fa-facebook"></i></a>
-                         <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" style="font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
-                         <a href="https://locket.cam/minhkhoifoto" target="_blank" style="font-size: 1.2rem;"><i class="fa-solid fa-heart"></i></a>
-                         <a href="https://wa.me/qr/EHDNZFH6A7FWG1" target="_blank" style="font-size: 1.2rem;"><i class="fa-brands fa-whatsapp"></i></a>
-                         <a href="https://www.linkedin.com/in/minh-kh%C3%B4i-l%C6%B0u-0613133ab/" target="_blank" style="font-size: 1.2rem;"><i class="fa-brands fa-linkedin"></i></a>
+                         <a href="https://www.facebook.com/minhkhoifoto.27" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                         <a href="https://www.instagram.com/minhkhoifoto.27/" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                         <a href="https://locket.cam/minhkhoifoto" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="Locket"><i class="fa-solid fa-heart"></i></a>
+                         <a href="https://wa.me/qr/EHDNZFH6A7FWG1" target="_blank" style="margin-right: 15px; font-size: 1.2rem;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                         <a href="https://www.linkedin.com/in/minh-kh%C3%B4i-l%C6%B0u-0613133ab/" target="_blank" style="font-size: 1.2rem;" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
                     </div>
                 </div>
 
@@ -650,7 +650,7 @@
             offset: 50
         });
 
-        // [TÍNH NĂNG MỚI] 1. SCROLL PROGRESS BAR & BACK TO TOP
+        // 1. SCROLL PROGRESS BAR & BACK TO TOP
         window.addEventListener('scroll', () => {
             // Progress Bar Logic
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -671,7 +671,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // [TÍNH NĂNG MỚI] 2. TYPEWRITER EFFECT
+        // 2. TYPEWRITER EFFECT
         const textsVi = ["Nhà nghiên cứu.", "Nhiếp ảnh gia.", "Giáo lý viên.", "Lập trình viên."];
         const textsEn = ["Researcher.", "Photographer.", "Theologian.", "Developer."];
         
