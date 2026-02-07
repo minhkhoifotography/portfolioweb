@@ -40,6 +40,15 @@
             overflow-x: hidden;
         }
 
+        /* [NÂNG CẤP 1] Scroll Progress Bar */
+        .progress-container {
+            width: 100%; height: 4px; background: #ccc;
+            position: fixed; top: 0; left: 0; z-index: 9999;
+        }
+        .progress-bar {
+            height: 4px; background: var(--harvard-crimson); width: 0%;
+        }
+
         /* --- UTILS --- */
         body.lang-vi .content-en { display: none !important; }
         body.lang-en .content-vi { display: none !important; }
@@ -87,7 +96,7 @@
         }
         .nav-btn:hover, .nav-btn.active { opacity: 1; border-color: var(--white); }
 
-        /* --- ACTION BUTTONS --- */
+        /* --- FAB BUTTONS --- */
         .fab-container {
             position: fixed; bottom: 30px; right: 30px;
             display: flex; flex-direction: column; gap: 15px; z-index: 2000;
@@ -110,9 +119,18 @@
         /* --- HERO SECTION --- */
         .hero { background-color: var(--harvard-black); color: var(--white); position: relative; overflow: hidden; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 550px; }
+        
         .hero-image {
-            background-image: url('Pio_02.png'); background-size: cover; background-position: center; position: relative;
+            background-image: url('Pio_02.png'); 
+            background-size: cover; 
+            background-position: center; 
+            position: relative;
+            /* [NÂNG CẤP 3] Parallax Effect */
+            background-attachment: fixed;
         }
+        /* Fallback on mobile (tắt parallax trên mobile để mượt hơn) */
+        @media (max-width: 768px) { .hero-image { background-attachment: scroll; } }
+
         .hero-image::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.2); }
         .hero-content { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; background: var(--harvard-black); }
         
@@ -124,6 +142,13 @@
 
         .hero-title { font-family: var(--font-serif); font-size: 3rem; line-height: 1.1; margin-bottom: 25px; }
         .hero-desc { font-size: 1.1rem; color: #cccccc; margin-bottom: 40px; font-weight: 300; }
+        
+        /* [NÂNG CẤP 2] Typewriter Cursor */
+        .typing-text::after, .typing-text-en::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         
         .btn-crimson {
             display: inline-block; background-color: var(--harvard-crimson); color: var(--white);
@@ -191,9 +216,14 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .portfolio-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
         .portfolio-img {
             height: 200px; background-color: #ddd; background-size: cover; background-position: center; position: relative;
+            transition: transform 0.5s ease;
         }
+        /* [NÂNG CẤP] Zoom ảnh khi hover */
+        .portfolio-card:hover .portfolio-img { transform: scale(1.05); }
+
         .portfolio-tag {
             position: absolute; top: 15px; right: 15px;
             background: var(--harvard-crimson); color: white;
@@ -223,6 +253,10 @@
     </style>
 </head>
 <body class="lang-vi">
+
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
 
     <div class="utility-bar">
         <div class="container utility-wrapper">
@@ -267,12 +301,15 @@
                         <span class="content-vi">Đôi nét về Minh Khôi</span>
                         <span class="content-en">About Minh Khoi</span>
                     </h1>
+                    
                     <p class="hero-desc">
                         <span class="content-vi">
-                            Cuộc sống với tôi là một hành trình dài truy cầu Chân - Thiện - Mỹ. Từ tư duy logic của khoa học máy tính, tôi tìm thấy rung cảm qua ống kính nhiếp ảnh và chiều sâu trong tư tưởng Thần học. Đây là nơi lưu giữ quá trình tôi trưởng thành, kiến tạo bản sắc và thực hiện khát vọng phụng sự xã hội.
+                            Tôi là một <span class="typing-text" style="color: #FFD700; font-weight: 700;"></span><br>
+                            Hành trình tìm kiếm sự giao thoa giữa Đức tin, Nghệ thuật & Công nghệ.
                         </span>
                         <span class="content-en">
-                            Life to me is a long journey in pursuit of Truth, Goodness, and Beauty. From the logic of computer science, I found emotion through the lens of photography and depth in theological thought. This is where I archive my growth, identity creation, and aspiration to serve society.
+                            I am a <span class="typing-text-en" style="color: #FFD700; font-weight: 700;"></span><br>
+                            Seeker of the Intersection between Faith, Arts & Technology.
                         </span>
                     </p>
                     
@@ -613,28 +650,78 @@
             offset: 50
         });
 
+        // [TÍNH NĂNG MỚI] 1. SCROLL PROGRESS BAR & BACK TO TOP
+        window.addEventListener('scroll', () => {
+            // Progress Bar Logic
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+
+            // Back to Top Logic
+            const btn = document.getElementById('backToTop');
+            if (winScroll > 300) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // [TÍNH NĂNG MỚI] 2. TYPEWRITER EFFECT
+        const textsVi = ["Nhà nghiên cứu.", "Nhiếp ảnh gia.", "Giáo lý viên.", "Lập trình viên."];
+        const textsEn = ["Researcher.", "Photographer.", "Theologian.", "Developer."];
+        
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        function type() {
+            const isVi = document.body.classList.contains('lang-vi');
+            const texts = isVi ? textsVi : textsEn;
+            const targetClass = isVi ? '.typing-text' : '.typing-text-en';
+            
+            if (count === texts.length) { count = 0; }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            // Xóa chữ cũ trước khi gõ chữ mới nếu chuyển ngôn ngữ
+            const targets = document.querySelectorAll(targetClass);
+            targets.forEach(el => el.textContent = letter);
+
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); 
+            } else {
+                setTimeout(type, 100); 
+            }
+        }
+        
+        // Start typing on load
+        document.addEventListener('DOMContentLoaded', type);
+
         function switchTab(tabId) {
-            // 1. Ẩn tất cả section
             document.querySelectorAll('.content-section').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none'; 
             });
             
-            // 2. Xóa active nav
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
             
-            // 3. Hiện section mới
             const target = document.getElementById(tabId);
             if (target) {
                 target.style.display = 'block'; 
-                // Refresh AOS để animation chạy lại
                 setTimeout(() => {
                     target.classList.add('active');
                     AOS.refresh(); 
                 }, 10);
             }
 
-            // 4. Highlight nav
             const btns = document.querySelectorAll('.nav-btn');
             btns.forEach(btn => {
                 if(btn.getAttribute('onclick').includes("'" + tabId + "'")) {
@@ -642,23 +729,8 @@
                 }
             });
 
-            // 5. Scroll top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // Back to Top Logic
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-            }
-        });
 
         function toggleLanguage() {
             const body = document.body;
